@@ -1,9 +1,19 @@
 package domain;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+
+@Entity
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     Long id;
+
+    @NotBlank
     String name;
+
+    @NotBlank
     String email;
 
     public User(Long id, String name, String email) {

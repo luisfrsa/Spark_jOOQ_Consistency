@@ -1,31 +1,51 @@
 package repository;
 
+import domain.User;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
+import javax.persistence.EntityManager;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
 
-public class UserRepository implements RepositoryInterface {
+public class UserRepository implements RepositoryInterface<User> {
 
-    @Override
-    public Object getById(Long id) {
-        return null;
+    private SessionFactory sf = new Configuration().configure().buildSessionFactory();
+
+    private EntityManager session = sf.createEntityManager();
+
+    public User getById(Long id) {
+        User user = session.find(User.class,id);
+        return user;
     }
 
     @Override
-    public LinkedList getByAll() {
-        return null;
+    public List<User> getByAll() {
+        List<User> users = session.createQuery("FROM User").getResultList();
+        return users;
     }
 
     @Override
-    public Object save(Object entity) {
-        return null;
+    public User save(Object entity) {
+        session.getTransaction().begin();
+        session.persist(entity);
+        session.getTransaction().commit();
     }
 
     @Override
     public boolean delete(Object entity) {
+        if (Objects.nonNull(entity)) {
+            session.getTransaction().begin();
+            session.remove(entity);
+            session.getTransaction().commit();
+            return true;
+        }
         return false;
     }
 
     @Override
     public boolean delete(Long id) {
-        return false;
+        return delete(getById(id));
     }
 }
