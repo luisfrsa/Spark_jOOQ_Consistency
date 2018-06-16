@@ -1,7 +1,5 @@
 package service;
 
-
-
 import domain.User;
 
 import java.util.ArrayList;
@@ -14,6 +12,10 @@ public class UserService {
 
     public static Map users = new HashMap<>();
     private static final AtomicInteger count = new AtomicInteger(0);
+
+
+    public UserService() {
+    }
 
     public User findById(String id) {
         return (User) users.get(id);
@@ -51,6 +53,5 @@ public class UserService {
         return new ArrayList(users.values());
     }
 
-    public UserService() {
-    }
+
 }
