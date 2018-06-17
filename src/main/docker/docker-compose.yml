@@ -1,0 +1,11 @@
+version: '3'
+services:
+  spark:
+    image: openjdk:8-jre-alpine
+    volumes:
+        - /home/luis/Documents/projetos/sd_consistency/target:/root/project
+#    environment:
+#        - POSTGRES_USER=elageek_controle_maven
+#        - POSTGRES_PASSWORD=
+    ports:
+        - 8090:8080

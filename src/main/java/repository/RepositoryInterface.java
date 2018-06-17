@@ -1,16 +1,16 @@
 package repository;
 
-import java.util.LinkedList;
+import java.util.List;
 
 public interface RepositoryInterface<T> {
 
     T getById(Long id);
 
-    LinkedList<T> getByAll();
+    List<T> getByAll();
 
-    <T> T save(T entity);
+    T save(T entity);
 
     boolean delete(T entity);
 
     boolean delete(Long id);
-//}
+}

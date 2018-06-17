@@ -16,7 +16,7 @@ public class UserRepository implements RepositoryInterface<User> {
     private EntityManager session = sf.createEntityManager();
 
     public User getById(Long id) {
-        User user = session.find(User.class,id);
+        User user = session.find(User.class, id);
         return user;
     }
 
@@ -27,14 +27,15 @@ public class UserRepository implements RepositoryInterface<User> {
     }
 
     @Override
-    public User save(Object entity) {
+    public User save(User entity) {
         session.getTransaction().begin();
         session.persist(entity);
         session.getTransaction().commit();
+        return entity;
     }
 
     @Override
-    public boolean delete(Object entity) {
+    public boolean delete(User entity) {
         if (Objects.nonNull(entity)) {
             session.getTransaction().begin();
             session.remove(entity);
