@@ -1,57 +1,25 @@
 package service;
 
 import domain.User;
+import repository.UserRepository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class UserService {
 
-    public static Map users = new HashMap<>();
-    private static final AtomicInteger count = new AtomicInteger(0);
-
+    private static UserRepository userRepository;
 
     public UserService() {
-    }
-
-    public User findById(String id) {
-        return (User) users.get(id);
-    }
-
-    public User add(String name, String email) {
-        Long currentId = Long.valueOf(count.incrementAndGet());
-        User user = new User(currentId, name, email);
-        users.put(String.valueOf(currentId), user);
-        return user;
-    }
-
-    public User update(String id, String name, String email) {
-
-        User user = (User) users.get(id);
-        if (name != null) {
-            user.setName(name);
-        }
-
-        if (email != null) {
-            user.setEmail(email);
-        }
-        users.put(id, user);
-
-        return user;
-
+        UserService.userRepository = new UserRepository();
     }
 
 
-    public void delete(String id) {
-        users.remove(id);
+    public User add(Long id, String name) {
+        User user = new User(id, name);
+        return userRepository.save(user);
     }
 
     public List findAll() {
-        return new ArrayList(users.values());
+        return userRepository.getAll();
     }
-
-
 }

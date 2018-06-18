@@ -1,77 +1,42 @@
 package controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import config.Config;
 import domain.User;
 import service.UserService;
 
 import java.util.List;
 
+import static java.lang.String.format;
 import static spark.Spark.*;
+
 public class UserController {
 
-//    private static UserService userService = new UserService();
+    //    private static UserService userService = new UserService();
     private static ObjectMapper om = new ObjectMapper();
+    private static UserService userService = new UserService();
 
-    public UserController(final UserService userService) {
-        // Main Page, welcome
-        get("/", (request, response) -> "Welcome");
+    public UserController() {
 
-        // POST - Add an user
+        get("/", (request, response) -> {
+            userService.add(1L, "nome");
+            System.out.println(userService.findAll().toString());
+            return format("Welcome by: id: %s port: %s", Config.id, Config.port);
+        });
+
         post("/user/add", (request, response) -> {
-
+            Long id = Long.parseLong(request.queryParams("id"));
             String name = request.queryParams("name");
-            String email = request.queryParams("email");
-            User user = userService.add(name, email);
+            User user = userService.add(id, name);
             response.status(201); // 201 Created
             return om.writeValueAsString(user);
 
         });
 
-
-
-        // GET - Give me user with this id
-        get("/user/:id", (request, response) -> {
-            User user = userService.findById(request.params(":id"));
+        get("/user/all", (request, response) -> {
+            List<User> user = userService.findAll();
             if (user != null) {
                 return om.writeValueAsString(user);
-            } else {
-                response.status(404); // 404 Not found
-                return om.writeValueAsString("user not found");
-            }
-        });
-
-        // Get - Give me all users
-        get("/user", (request, response) -> {
-            List result = userService.findAll();
-            if (result.isEmpty()) {
-                return om.writeValueAsString("user not found");
-            } else {
-                return om.writeValueAsString(userService.findAll());
-            }
-        });
-
-        // PUT - Update user
-        put("/user/:id", (request, response) -> {
-            String id = request.params(":id");
-            User user = userService.findById(id);
-            if (user != null) {
-                String name = request.queryParams("name");
-                String email = request.queryParams("email");
-                userService.update(id, name, email);
-                return om.writeValueAsString("user with id " + id + " is updated!");
-            } else {
-                response.status(404);
-                return om.writeValueAsString("user not found");
-            }
-        });
-
-        // DELETE - delete user
-        delete("/user/:id", (request, response) -> {
-            String id = request.params(":id");
-            User user = userService.findById(id);
-            if (user != null) {
-                userService.delete(id);
-                return om.writeValueAsString("user with id " + id + " is deleted!");
             } else {
                 response.status(404);
                 return om.writeValueAsString("user not found");

@@ -1,0 +1,10 @@
+17:58:19.427 [Thread-0] INFO org.eclipse.jetty.util.log - Logging initialized @356ms to org.eclipse.jetty.util.log.Slf4jLog
+17:58:19.472 [Thread-0] INFO spark.embeddedserver.jetty.EmbeddedJettyServer - == Spark has ignited ...
+17:58:19.472 [Thread-0] INFO spark.embeddedserver.jetty.EmbeddedJettyServer - >> Listening on 0.0.0.0:8081
+17:58:19.476 [Thread-0] INFO org.eclipse.jetty.server.Server - jetty-9.4.8.v20171121, build timestamp: 2017-11-21T19:27:37-02:00, git hash: 82b8fb23f757335bb3329d540ce37a2a2615f0a8
+17:58:19.502 [Thread-0] INFO org.eclipse.jetty.server.session - DefaultSessionIdManager workerName=node0
+17:58:19.502 [Thread-0] INFO org.eclipse.jetty.server.session - No SessionScavenger set, using defaults
+17:58:19.504 [Thread-0] INFO org.eclipse.jetty.server.session - Scavenging every 600000ms
+17:58:19.524 [Thread-0] INFO org.eclipse.jetty.server.AbstractConnector - Started ServerConnector@3bdb5b2b{HTTP/1.1,[http/1.1]}{0.0.0.0:8081}
+17:58:19.524 [Thread-0] INFO org.eclipse.jetty.server.Server - Started @458ms
+17:58:24.069 [qtp560022571-12] INFO controller.ServerController - New request from 0, to update primary from false to 0

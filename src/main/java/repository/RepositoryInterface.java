@@ -6,7 +6,7 @@ public interface RepositoryInterface<T> {
 
     T getById(Long id);
 
-    List<T> getByAll();
+    List<T> getAll();
 
     T save(T entity);
 

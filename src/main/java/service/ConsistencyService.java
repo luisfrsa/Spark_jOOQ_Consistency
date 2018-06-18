@@ -1,6 +1,7 @@
 package service;
 
 import java.util.List;
+import java.util.Random;
 
 public class ConsistencyService {
 
@@ -13,10 +14,10 @@ public class ConsistencyService {
     }
 
     public ConsistencyService(Integer id, Integer primary, List<Integer> serverList) {
-        this.id = id;
-        this.primary = primary;
-        this.requestService = new RequestService();
-        this.serverList = serverList;
+        ConsistencyService.id = id;
+        ConsistencyService.primary = primary;
+        ConsistencyService.requestService = new RequestService();
+        ConsistencyService.serverList = serverList;
     }
 
     public Integer getCurrentPrimary() {
@@ -24,7 +25,7 @@ public class ConsistencyService {
     }
 
     public void setNewPrimary() {
-        primary++;
+        primary = serverList.get((new Random()).nextInt(serverList.size()));
         informNewPrimary();
     }
 

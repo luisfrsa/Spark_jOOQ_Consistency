@@ -1,5 +1,6 @@
 package repository;
 
+import DAO.HibernateUtil;
 import domain.User;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -11,9 +12,13 @@ import java.util.Objects;
 
 public class UserRepository implements RepositoryInterface<User> {
 
-    private SessionFactory sf = new Configuration().configure().buildSessionFactory();
+    private SessionFactory sf = null;
+    private EntityManager session = null;
 
-    private EntityManager session = sf.createEntityManager();
+    public UserRepository() {
+        this.sf = HibernateUtil.getSessionFactory();
+        this.session = this.sf.createEntityManager();
+    }
 
     public User getById(Long id) {
         User user = session.find(User.class, id);
@@ -21,13 +26,17 @@ public class UserRepository implements RepositoryInterface<User> {
     }
 
     @Override
-    public List<User> getByAll() {
+    public List<User> getAll() {
+        System.out.println("-------------------------");
+        System.out.println("GET ALL USER");
         List<User> users = session.createQuery("FROM User").getResultList();
         return users;
     }
 
     @Override
     public User save(User entity) {
+        System.out.println("-------------------------");
+        System.out.println("CRIANDO USER");
         session.getTransaction().begin();
         session.persist(entity);
         session.getTransaction().commit();
@@ -36,6 +45,7 @@ public class UserRepository implements RepositoryInterface<User> {
 
     @Override
     public boolean delete(User entity) {
+
         if (Objects.nonNull(entity)) {
             session.getTransaction().begin();
             session.remove(entity);
