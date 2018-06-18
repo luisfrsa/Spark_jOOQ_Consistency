@@ -1,6 +1,8 @@
 package DAO;
 
+import com.fasterxml.classmate.AnnotationConfiguration;
 import config.Config;
+import domain.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -8,6 +10,8 @@ import org.hibernate.cfg.Configuration;
 import java.util.Objects;
 import java.util.Properties;
 
+
+//https://www.concretepage.com/hibernate/configure_hibernate_without_hibernate_cfg_xml
 public class HibernateUtil {
     private static SessionFactory sessionFactory = null;
     private static Session session = null;
@@ -33,7 +37,14 @@ public class HibernateUtil {
         prop.setProperty("hibernate.connection.password", "123");
         prop.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
         prop.setProperty("show_sql", "true");
-        Configuration configuration = new Configuration().addProperties(prop);
+
+
+        Configuration configuration = new Configuration()
+                .addPackage("domain")
+                .addProperties(prop)
+                .addAnnotatedClass(User.class);
+
+
         HibernateUtil.sessionFactory = configuration.buildSessionFactory();
         HibernateUtil.session = HibernateUtil.sessionFactory.openSession();
     }

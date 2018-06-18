@@ -40,6 +40,7 @@ public class UserRepository implements RepositoryInterface<User> {
         session.getTransaction().begin();
         session.persist(entity);
         session.getTransaction().commit();
+        session.close();
         return entity;
     }
 
@@ -50,6 +51,7 @@ public class UserRepository implements RepositoryInterface<User> {
             session.getTransaction().begin();
             session.remove(entity);
             session.getTransaction().commit();
+            session.close();
             return true;
         }
         return false;
